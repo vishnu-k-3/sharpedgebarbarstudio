@@ -14,13 +14,14 @@ const CONFIG = {
 
   // ---- SERVICES ----
   // duration = slot minutes reserved on the calendar (REQUIRED for overlap checks)
+  // icon = key from js/icons.js (line icons, not emojis)
   services: [
-    { id: "haircut",      name: "Hair Cut",            emoji: "✂️", duration: 45, price: "₹199",  desc: "Consultation, cut, wash & style." },
-    { id: "hairbeard",    name: "Hair + Beard",        emoji: "🧔", duration: 75, price: "₹349",  desc: "Full hair cut plus beard shape, line-up & wash." },
-    { id: "beard",        name: "Beard Trim & Shape",  emoji: "🪒", duration: 30, price: "₹149",  desc: "Beard sculpting, line-up and hot towel finish." },
-    { id: "facial",       name: "Facial (Glow)",       emoji: "✨", duration: 60, price: "₹499",  desc: "Clean-up, massage & glow mask for men." },
-    { id: "detan",        name: "De-Tan (Face/Neck)",  emoji: "🌞", duration: 45, price: "₹399",  desc: "Removes sun tan & dullness, instant brightness." },
-    { id: "cleanup",      name: "Face Clean-Up",       emoji: "🧖", duration: 30, price: "₹199",  desc: "Quick deep clean for busy days." },
+    { id: "haircut",      name: "Hair Cut",            icon: "scissors",  duration: 45, price: "₹199",  desc: "Consultation, cut, wash & style." },
+    { id: "hairbeard",    name: "Hair + Beard",        icon: "comb",      duration: 75, price: "₹349",  desc: "Full hair cut plus beard shape, line-up & wash." },
+    { id: "beard",        name: "Beard Trim & Shape",  icon: "comb",      duration: 30, price: "₹149",  desc: "Beard sculpting, line-up and hot towel finish." },
+    { id: "facial",       name: "Facial (Glow)",       icon: "sparkles",  duration: 60, price: "₹499",  desc: "Clean-up, massage & glow mask for men." },
+    { id: "detan",        name: "De-Tan (Face/Neck)",  icon: "sun",       duration: 45, price: "₹399",  desc: "Removes sun tan & dullness, instant brightness." },
+    { id: "cleanup",      name: "Face Clean-Up",       icon: "droplet",   duration: 30, price: "₹199",  desc: "Quick deep clean for busy days." },
   ],
 
   phone: "+91 98765 43210",        // << replace with real number

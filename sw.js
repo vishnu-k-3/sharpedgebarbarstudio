@@ -1,18 +1,21 @@
 /* Basic offline cache so the app works like an installed app (PWA step). */
-const CACHE = "sharpedge-v2";
+const CACHE = "sharpedge-v4";
 const ASSETS = [
   "./",
   "./index.html",
+  "./admin.html",
   "./css/styles.css",
   "./js/config.js",
+  "./js/icons.js",
   "./js/storage.js",
   "./js/app.js",
+  "./js/admin.js",
   "./assets/logo.svg",
   "./manifest.json"
 ];
 
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)));
+  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS.map(u => new Request(u, { cache: "reload" })))));
 });
 
 self.addEventListener("activate", (e) => {
@@ -25,7 +28,7 @@ self.addEventListener("activate", (e) => {
 
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
-  if (!e.request.url.startsWith(self.location.origin)) return; // skip maps/videos
+  if (!e.request.url.startsWith(self.location.origin)) return; // skip fonts/videos/maps
   e.respondWith(
     caches.match(e.request).then(
       (hit) =>

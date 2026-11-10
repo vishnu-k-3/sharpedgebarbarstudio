@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SharpEdge Barber Studio – Book Your Slot Online</title>
   <meta name="description" content="Book your haircut, beard, facial and de-tan slots online at SharpEdge Barber Studio. Free booking – walk in at your reserved time." />
-  <meta name="theme-color" content="#101418" />
+  <meta name="theme-color" content="#14120e" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="css/styles.css" />
@@ -25,9 +28,7 @@
         <a href="#reviews">Reviews</a>
         <a href="#booking" class="btn btn-sm btn-gold">Book Slot</a>
       </nav>
-      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"></button>
     </div>
   </header>
 
@@ -35,26 +36,26 @@
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-text">
-        <p class="hero-kicker">✂️ Walk-ins welcome · Online slot booking</p>
-        <h1>Look Sharp.<br />Feel Sharper.</h1>
+        <p class="hero-kicker">Walk-ins Welcome · Online Slot Booking</p>
+        <h1>A Cut Above<br />The <em>Ordinary</em></h1>
         <p class="hero-sub">
-          Haircuts, beard styling, facials &amp; de-tan — by expert barbers.
-          Book your slot online in 30 seconds. <strong>No payment needed</strong> — pay at the shop.
+          Precision haircuts, beard grooming, facials &amp; de-tan by expert barbers.
+          Reserve your time online in 30 seconds — <strong>no payment needed</strong>, pay at the shop.
         </p>
         <div class="hero-actions">
-          <a href="#booking" class="btn btn-gold">Book a Slot Now</a>
-          <a href="#services" class="btn btn-ghost">See Services</a>
+          <a href="#booking" class="btn btn-gold">Book a Slot</a>
+          <a href="#services" class="btn btn-ghost">View Services</a>
         </div>
         <ul class="hero-badges">
-          <li>🕐 Open 9 AM – 8 PM</li>
-          <li>📅 Closed Sundays</li>
-          <li>💳 Pay at shop only</li>
+          <li><span data-icon="clock"></span>Open 9 AM – 8 PM, Mon–Sat</li>
+          <li><span data-icon="calendar"></span>Sunday closed</li>
+          <li><span data-icon="wallet"></span>Pay only at the shop</li>
         </ul>
       </div>
       <div class="hero-card" aria-hidden="true">
-        <div class="hero-card-top">NEXT AVAILABLE</div>
+        <div class="hero-card-top">Next available</div>
         <div class="hero-clock" id="heroClock">--:--</div>
-        <div class="hero-note">Real-time slot calendar below ↓</div>
+        <div class="hero-note">Real-time slot calendar below</div>
       </div>
     </div>
   </section>
@@ -63,9 +64,9 @@
   <section class="section" id="services">
     <div class="container">
       <h2 class="section-title">Services &amp; Prices</h2>
-      <p class="section-sub">All services are booked with a fixed time slot so you never wait in a queue.</p>
-      <div class="cards-grid" id="servicesGrid"><!-- built by JS --></div>
-      <p class="tiny-note">Durations shown are the slot minutes reserved for you. Prices are indicative — final rates at the shop.</p>
+      <p class="section-sub">Every service is booked against a fixed time slot — so you never wait in a queue.</p>
+      <div class="cards-grid" id="servicesGrid"><!-- built by app.js --></div>
+      <p class="tiny-note" style="text-align:center">Slot durations shown are minutes reserved exclusively for you. Prices are indicative — final rates at the shop.</p>
     </div>
   </section>
 
@@ -73,42 +74,37 @@
   <section class="section section-dark" id="booking">
     <div class="container">
       <h2 class="section-title">Book Your Slot</h2>
-      <p class="section-sub">Pick a service, choose a day and select one of the free time slots. No payment.</p>
+      <p class="section-sub">Choose a service, a day and a free time slot. Booking is free — settle the bill at the shop.</p>
 
       <div class="booking-panel">
-        <!-- Step 1: service -->
         <div class="step">
           <div class="step-head"><span class="step-num">1</span><h3>Choose Service</h3></div>
-          <div class="chip-row" id="serviceChips"><!-- built by JS --></div>
+          <div class="chip-row" id="serviceChips"></div>
         </div>
 
-        <!-- Step 2: date -->
         <div class="step">
           <div class="step-head"><span class="step-num">2</span><h3>Choose Date</h3></div>
-          <div class="date-row" id="dateRow"><!-- built by JS --></div>
+          <div class="date-row" id="dateRow"></div>
         </div>
 
-        <!-- Step 3: time -->
         <div class="step">
           <div class="step-head"><span class="step-num">3</span><h3>Choose Time</h3></div>
-          <p class="slot-status" id="slotStatus">Select a service first.</p>
-          <div class="slot-grid" id="slotGrid"><!-- built by JS --></div>
+          <p class="slot-status" id="slotStatus">Select a service to begin.</p>
+          <div class="slot-grid" id="slotGrid"></div>
         </div>
 
-        <!-- Step 4: details -->
         <div class="step">
           <div class="step-head"><span class="step-num">4</span><h3>Your Details</h3></div>
           <form id="bookingForm" autocomplete="on">
             <div class="form-grid">
-              <label>Name <input type="text" id="custName" placeholder="Your full name" required maxlength="60" /></label>
-              <label>Phone <input type="tel" id="custPhone" placeholder="10-digit mobile number" required pattern="[0-9]{10}" inputmode="numeric" maxlength="10" /></label>
+              <label>Full Name <input type="text" id="custName" placeholder="e.g. Arjun Mehta" required maxlength="60" /></label>
+              <label>Mobile Number <input type="tel" id="custPhone" placeholder="10-digit number" required pattern="[0-9]{10}" inputmode="numeric" maxlength="10" /></label>
             </div>
             <div class="selection-summary" id="selectionSummary">No slot selected yet.</div>
-            <button type="submit" class="btn btn-gold btn-wide" id="bookBtn" disabled>Confirm Booking (Free)</button>
+            <button type="submit" class="btn btn-gold btn-wide" id="bookBtn" disabled>Confirm Booking — Free</button>
           </form>
         </div>
 
-        <!-- My bookings -->
         <div class="my-bookings">
           <div class="my-head">
             <h3>My Bookings</h3>
@@ -120,11 +116,11 @@
     </div>
   </section>
 
-  <!-- ===== OUR WORK (previous projects / portfolio) ===== -->
+  <!-- ===== OUR WORK ===== -->
   <section class="section" id="work">
     <div class="container">
       <h2 class="section-title">Our Work</h2>
-      <p class="section-sub">Real results from our chairs — replacements-ready placeholders shown here.</p>
+      <p class="section-sub">Real results from our chairs — placeholders below are ready to be replaced with your own photographs.</p>
 
       <div class="filter-row" id="workFilter">
         <button class="chip active" data-filter="all">All</button>
@@ -133,7 +129,7 @@
         <button class="chip" data-filter="skin">Facial &amp; De-tan</button>
       </div>
 
-      <div class="work-grid" id="workGrid"><!-- built by JS --></div>
+      <div class="work-grid" id="workGrid"></div>
     </div>
   </section>
 
@@ -145,19 +141,17 @@
 
       <div class="rating-banner">
         <div class="rating-big">4.8</div>
-        <div>
-          <div class="stars" aria-label="4.8 out of 5 stars">★★★★★</div>
+        <div class="rating-meta">
+          <div class="stars" id="ratingStars" aria-label="4.8 out of 5 stars"></div>
           <p>Based on 240+ customer reviews</p>
         </div>
       </div>
 
-      <!-- written reviews (with attached photos) -->
-      <h3 class="sub-title">✍️ Written Reviews</h3>
-      <div class="review-grid" id="reviewGrid"><!-- built by JS --></div>
+      <h3 class="sub-title" id="writtenTitle">Written Reviews</h3>
+      <div class="review-grid" id="reviewGrid"></div>
 
-      <!-- video reviews -->
-      <h3 class="sub-title">🎥 Video Reviews</h3>
-      <div class="video-grid" id="videoGrid"><!-- built by JS --></div>
+      <h3 class="sub-title" id="videoTitle">Video Reviews</h3>
+      <div class="video-grid" id="videoGrid"></div>
     </div>
   </section>
 
@@ -166,16 +160,16 @@
     <div class="container contact-grid">
       <div>
         <h2 class="section-title">Visit Us</h2>
-        <p class="contact-line">📍 12, Main Street, MG Road (replace with real address)</p>
-        <p class="contact-line">📞 +91 98765 43210 (replace with real number)</p>
-        <p class="contact-line">🕐 Mon–Sat: 9:00 AM – 8:00 PM · Sunday: Closed</p>
+        <p class="contact-line" id="contactAddr"></p>
+        <p class="contact-line" id="contactPhone"></p>
+        <p class="contact-line" id="contactHours"></p>
         <a class="btn btn-gold" href="#booking">Book a Slot</a>
       </div>
       <div class="map-card">
-        <!-- replace this iframe src with the real Google Maps embed -->
+        <!-- replace this iframe src with the shop's real Google Maps embed -->
         <iframe title="Shop location map" loading="lazy"
           src="https://www.openstreetmap.org/export/embed.html?bbox=77.55%2C12.90%2C77.65%2C12.98&amp;layer=mapnik"></iframe>
-        <span class="tiny-note">Placeholder map — replace with shop's exact Google Maps embed before launch.</span>
+        <span class="tiny-note">Placeholder map — replace with the shop's exact Google Maps embed before launch.</span>
       </div>
     </div>
   </section>
@@ -184,21 +178,22 @@
   <footer class="footer">
     <div class="container footer-inner">
       <p>© <span id="year"></span> SharpEdge Barber Studio. All rights reserved.</p>
-      <p class="tiny-note">Slot booking is free · Pay at the shop · <a href="admin.html" style="color:var(--gold)">Owner login</a></p>
+      <p><a href="admin.html">Owner login</a> · booking is free, pay at the shop</p>
     </div>
   </footer>
 
   <!-- Confirmation modal -->
   <div class="modal-backdrop" id="modal" hidden>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modal-icon">✅</div>
-      <h3 id="modalTitle">Booking Confirmed!</h3>
+      <div class="modal-icon" id="modalIcon"></div>
+      <h3 id="modalTitle">Booking Confirmed</h3>
       <div id="modalBody" class="modal-body"></div>
-      <button class="btn btn-gold btn-wide" id="modalClose">Done</button>
+      <button class="btn btn-gold btn-wide" id="modalClose">Done — Book Another Anytime</button>
     </div>
   </div>
 
   <script src="js/config.js"></script>
+  <script src="js/icons.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/app.js"></script>
 </body>

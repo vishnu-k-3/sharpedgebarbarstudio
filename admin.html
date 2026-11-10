@@ -4,71 +4,75 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Owner Admin – Bookings | SharpEdge</title>
-  <meta name="theme-color" content="#101418" />
+  <meta name="theme-color" content="#14120e" />
   <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    /* admin-only extras */
+    /* admin-only extras — inherits the main elegant theme */
     body { background: var(--bg-dark); color: var(--text-inv); min-height: 100vh; }
-    .admin-wrap { max-width: 1000px; margin: 0 auto; padding: 1.5rem 4% 3rem; }
-    .admin-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
-    .admin-top h1 { font-size: 1.4rem; }
-    .admin-top h1 span { color: var(--gold); }
-    .mode-badge { font-size: 0.72rem; padding: 0.3rem 0.8rem; border-radius: 999px; border: 1px solid var(--line-dark); color: #a9b0b8; }
+    .admin-wrap { max-width: 1040px; margin: 0 auto; padding: 1.6rem 4% 3rem; }
+    .admin-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.7rem; }
+    .admin-top h1 { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; display: flex; align-items: center; gap: 0.6rem; }
+    .admin-top h1 .ico { color: var(--gold-soft); }
+    .admin-top h1 strong { color: var(--gold-soft); font-weight: 600; }
+    .mode-badge { font-size: 0.68rem; padding: 0.35rem 0.85rem; border-radius: 2px; border: 1px solid var(--line-dark); color: var(--muted-inv); letter-spacing: 0.08em; text-transform: uppercase; }
 
-    /* PIN gate */
-    .pin-gate { max-width: 360px; margin: 12vh auto 0; text-align: center; }
-    .pin-gate .brand-logo { width: 56px; margin: 0 auto 0.8rem; }
-    .pin-gate h2 { font-size: 1.3rem; margin-bottom: 0.4rem; }
-    .pin-gate p { color: #8a9099; font-size: 0.85rem; margin-bottom: 1.2rem; }
+    .pin-gate { max-width: 360px; margin: 11vh auto 0; text-align: center; }
+    .pin-gate img { width: 52px; margin: 0 auto 1rem; }
+    .pin-gate h2 { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .pin-gate p { color: var(--muted-inv); font-size: 0.85rem; margin-bottom: 1.3rem; }
     .pin-gate input {
-      width: 100%; padding: 0.9rem; font-size: 1.4rem; letter-spacing: 8px; text-align: center;
-      border-radius: 10px; border: 1.5px solid var(--line-dark); background: var(--bg-dark);
-      color: var(--text-inv);
+      width: 100%; padding: 0.95rem; font-size: 1.35rem; letter-spacing: 10px; text-align: center;
+      border-radius: 2px; border: 1px solid var(--line-dark); background: var(--bg-dark);
+      color: var(--text-inv); font-family: var(--sans);
     }
     .pin-gate input:focus { outline: none; border-color: var(--gold); }
-    .pin-error { color: #e08579; font-size: 0.8rem; margin: 0.7rem 0; min-height: 1.2em; }
+    .pin-error { color: #d98d84; font-size: 0.8rem; margin: 0.7rem 0; min-height: 1.2em; }
 
-    /* stats */
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.9rem; margin-bottom: 1.6rem; }
-    .stat { background: var(--panel-dark); border: 1px solid var(--line-dark); border-radius: var(--radius); padding: 1rem 1.2rem; }
-    .stat b { display: block; font-size: 1.7rem; color: var(--gold); font-variant-numeric: tabular-nums; }
-    .stat span { font-size: 0.78rem; color: #a9b0b8; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 1rem; margin-bottom: 1.7rem; }
+    .stat { background: var(--panel-dark); border: 1px solid var(--line-dark); border-radius: var(--radius-lg); padding: 1.15rem 1.25rem; }
+    .stat b { display: block; font-family: var(--serif); font-size: 1.8rem; color: var(--gold-soft); font-variant-numeric: tabular-nums; line-height: 1.15; }
+    .stat span { font-size: 0.7rem; color: var(--muted-inv); letter-spacing: 0.1em; text-transform: uppercase; }
 
-    /* toolbar */
-    .toolbar { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.1rem; }
+    .toolbar { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.1rem; }
     .toolbar input[type="date"] {
-      padding: 0.55rem 0.8rem; border-radius: 10px; border: 1.5px solid var(--line-dark);
-      background: var(--bg-dark); color: var(--text-inv); font-size: 0.9rem; color-scheme: dark;
+      padding: 0.55rem 0.8rem; border-radius: 2px; border: 1px solid var(--line-dark);
+      background: var(--bg-dark); color: var(--text-inv); font-size: 0.85rem; color-scheme: dark;
+      font-family: var(--sans);
     }
 
-    /* table */
-    .admin-table-wrap { background: var(--panel-dark); border: 1px solid var(--line-dark); border-radius: var(--radius); overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 720px; }
-    th, td { text-align: left; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--line-dark); white-space: nowrap; }
-    th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #8a9099; position: sticky; top: 0; background: var(--panel-dark); }
+    .admin-table-wrap { background: var(--panel-dark); border: 1px solid var(--line-dark); border-radius: var(--radius-lg); overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.87rem; min-width: 720px; }
+    th, td { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--line-dark); white-space: nowrap; }
+    th { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted-inv); position: sticky; top: 0; background: var(--panel-dark); }
     tr:last-child td { border-bottom: 0; }
     td .who { white-space: normal; }
-    .status-pill { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 999px; }
-    .st-confirmed { background: rgba(46,125,50,0.18); color: #8fd494; }
-    .st-cancelled { background: rgba(192,57,43,0.18); color: #e08579; text-decoration: none; }
+    td time { font-variant-numeric: tabular-nums; }
+    .status-pill { font-size: 0.65rem; font-weight: 600; padding: 0.25rem 0.65rem; border-radius: 2px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .st-confirmed { background: rgba(78, 114, 80, 0.18); color: #9fc2a1; }
+    .st-cancelled { background: rgba(166, 61, 51, 0.16); color: #d98d84; }
     .cell-cancel {
-      background: none; border: 1px solid var(--danger); color: #e08579;
-      border-radius: 999px; padding: 0.28rem 0.8rem; cursor: pointer; font-size: 0.75rem;
+      background: none; border: 1px solid rgba(166, 61, 51, 0.6); color: #d98d84;
+      border-radius: 2px; padding: 0.3rem 0.9rem; cursor: pointer; font-size: 0.68rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
     }
-    .cell-cancel:hover { background: var(--danger); color: #fff; }
-    .empty-row { text-align: center; color: #8a9099; padding: 2rem !important; white-space: normal; }
-    .selling { color: var(--gold); font-weight: 700; }
-    .admin-note { font-size: 0.76rem; color: #8a9099; margin-top: 1rem; }
-    @media (max-width: 560px) { .stat b { font-size: 1.3rem; } .admin-top h1 { font-size: 1.15rem; } }
+    .cell-cancel:hover { background: var(--danger); border-color: var(--danger); color: #fff; }
+    .empty-row { text-align: center; color: var(--muted-inv); padding: 2.2rem !important; white-space: normal; font-style: italic; }
+    .selling { color: var(--gold-soft); font-weight: 600; }
+    .admin-note { font-size: 0.76rem; color: var(--muted-inv); margin-top: 1rem; }
+    #refreshBtn { display: inline-flex; align-items: center; gap: 0.4rem; }
+    @media (max-width: 560px) { .stat b { font-size: 1.4rem; } .admin-top h1 { font-size: 1.2rem; } }
   </style>
 </head>
 <body>
 
   <!-- PIN gate -->
   <div class="pin-gate" id="pinGate">
-    <img src="assets/logo.svg" alt="" class="brand-logo" />
+    <img src="assets/logo.svg" alt="" />
     <h2>Owner Admin</h2>
     <p id="modeBadge2">Bookings dashboard</p>
     <input type="password" id="pinInput" inputmode="numeric" maxlength="8" placeholder="• • • •" aria-label="Admin PIN" />
@@ -79,7 +83,7 @@
   <!-- Dashboard -->
   <div class="admin-wrap" id="adminPanel" hidden>
     <div class="admin-top">
-      <h1>📋 Bookings · <span id="shopName">SharpEdge</span></h1>
+      <h1>Bookings · <strong id="shopName">SharpEdge</strong></h1>
       <div class="toolbar" style="margin:0">
         <span class="mode-badge" id="modeBadge"></span>
         <button class="cell-cancel" id="logoutBtn" style="border:0" title="Lock dashboard">🔒</button>
@@ -89,7 +93,7 @@
     <div class="stats">
       <div class="stat"><b id="statToday">–</b><span>Bookings today</span></div>
       <div class="stat"><b id="statUpcoming">–</b><span>Upcoming (booked in)</span></div>
-      <div class="stat"><b id="statRevenue">–</b><span>Expected at shop (upcoming)</span></div>
+      <div class="stat"><b id="statRevenue">–</b><span>Expected at shop</span></div>
       <div class="stat"><b id="statTotal">–</b><span>Confirmations all-time</span></div>
     </div>
 

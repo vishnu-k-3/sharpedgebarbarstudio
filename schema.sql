@@ -23,3 +23,14 @@ create index if not exists bookings_date_idx on bookings (date);
 -- read/write with the public anon key. Our API uses the private
 -- service-role key on the server, which bypasses RLS.
 alter table bookings enable row level security;
+
+-- The API role must be allowed to touch the table. Tables created
+-- via the SQL editor sometimes miss these grants and show
+-- "permission denied for table bookings" — so we grant explicitly.
+grant usage on schema public to service_role, anon, authenticated;
+
+grant all privileges on all tables    in schema public to service_role;
+grant all privileges on all sequences in schema public to service_role;
+
+alter default privileges in schema public grant all on tables    to service_role;
+alter default privileges in schema public grant all on sequences to service_role;

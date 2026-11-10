@@ -4,8 +4,8 @@
   "description": "Book haircut, beard, facial and de-tan slots at SharpEdge Barber Studio.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#101418",
-  "theme_color": "#101418",
+  "background_color": "#14120e",
+  "theme_color": "#14120e",
   "orientation": "portrait-primary",
   "icons": [
     { "src": "assets/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
