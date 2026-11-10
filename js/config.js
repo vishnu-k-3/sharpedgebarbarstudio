@@ -31,11 +31,11 @@ const CONFIG = {
   // true  = live shared calendar. apiBase options:
   //   "http://localhost:3000/api" → local Docker backend (backend/ folder)
   //   "/api"                      → hosted on Vercel (api/ folder + free Supabase DB)
-  useRemoteApi: false,
-  apiBase: "http://localhost:3000/api",
+  useRemoteApi: true,
+  apiBase: "/api",
 
   // ---- ADMIN PAGE PIN (owner view) ----
   // Change this before going live! In remote mode it must match the
   // ADMIN_PIN environment variable set on the server/Vercel.
-  adminPin: "2468",
+  adminPin: "9501",
 };
