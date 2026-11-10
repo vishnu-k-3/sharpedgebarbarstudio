@@ -22,7 +22,7 @@ async function run(req, res) {
   const db = require("../lib/db.js");
   if (!db.ready()) {
     return answer(res, 500, {
-      error: "Backend not configured. Add SUPABASE_URL and SUPABASE_SERVICE_KEY in Vercel → Settings → Environment Variables, then redeploy.",
+      error: `Backend not configured. ${db.diag()} Then Redeploy (Vercel → Deployments → ⋯ → Redeploy).`,
     });
   }
 
