@@ -30,7 +30,7 @@ c) vercel.com → sign up free → Add New Project → import from GitHub
 d) Edit js/config.js → set these two lines, then push/upload again:
       useRemoteApi: true,
       apiBase: "/api",
-      adminPin: "YOUR-PIN"   (same as ADMIN_PIN above)
+      adminPin: "YOUR-PIN"   (same as ADMIN_PIN above) 
 ✅ DONE — one shared live booking calendar + admin sees ALL bookings.
 
 ──────────────────────────────────────────────────────────────
