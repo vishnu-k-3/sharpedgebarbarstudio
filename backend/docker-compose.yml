@@ -1,0 +1,11 @@
+# OPTIONAL local backend for shared bookings (later phase)
+# Start:   docker compose up -d
+# Stop:    docker compose down
+services:
+  booking-api:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/data        # bookings survive container restarts
+    restart: unless-stopped

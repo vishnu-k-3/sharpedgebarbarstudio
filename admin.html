@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Owner Admin – Bookings | SharpEdge</title>
+  <meta name="theme-color" content="#101418" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* admin-only extras */
+    body { background: var(--bg-dark); color: var(--text-inv); min-height: 100vh; }
+    .admin-wrap { max-width: 1000px; margin: 0 auto; padding: 1.5rem 4% 3rem; }
+    .admin-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+    .admin-top h1 { font-size: 1.4rem; }
+    .admin-top h1 span { color: var(--gold); }
+    .mode-badge { font-size: 0.72rem; padding: 0.3rem 0.8rem; border-radius: 999px; border: 1px solid var(--line-dark); color: #a9b0b8; }
+
+    /* PIN gate */
+    .pin-gate { max-width: 360px; margin: 12vh auto 0; text-align: center; }
+    .pin-gate .brand-logo { width: 56px; margin: 0 auto 0.8rem; }
+    .pin-gate h2 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+    .pin-gate p { color: #8a9099; font-size: 0.85rem; margin-bottom: 1.2rem; }
+    .pin-gate input {
+      width: 100%; padding: 0.9rem; font-size: 1.4rem; letter-spacing: 8px; text-align: center;
+      border-radius: 10px; border: 1.5px solid var(--line-dark); background: var(--bg-dark);
+      color: var(--text-inv);
+    }
+    .pin-gate input:focus { outline: none; border-color: var(--gold); }
+    .pin-error { color: #e08579; font-size: 0.8rem; margin: 0.7rem 0; min-height: 1.2em; }
+
+    /* stats */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.9rem; margin-bottom: 1.6rem; }
+    .stat { background: var(--panel-dark); border: 1px solid var(--line-dark); border-radius: var(--radius); padding: 1rem 1.2rem; }
+    .stat b { display: block; font-size: 1.7rem; color: var(--gold); font-variant-numeric: tabular-nums; }
+    .stat span { font-size: 0.78rem; color: #a9b0b8; }
+
+    /* toolbar */
+    .toolbar { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.1rem; }
+    .toolbar input[type="date"] {
+      padding: 0.55rem 0.8rem; border-radius: 10px; border: 1.5px solid var(--line-dark);
+      background: var(--bg-dark); color: var(--text-inv); font-size: 0.9rem; color-scheme: dark;
+    }
+
+    /* table */
+    .admin-table-wrap { background: var(--panel-dark); border: 1px solid var(--line-dark); border-radius: var(--radius); overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 720px; }
+    th, td { text-align: left; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--line-dark); white-space: nowrap; }
+    th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #8a9099; position: sticky; top: 0; background: var(--panel-dark); }
+    tr:last-child td { border-bottom: 0; }
+    td .who { white-space: normal; }
+    .status-pill { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 999px; }
+    .st-confirmed { background: rgba(46,125,50,0.18); color: #8fd494; }
+    .st-cancelled { background: rgba(192,57,43,0.18); color: #e08579; text-decoration: none; }
+    .cell-cancel {
+      background: none; border: 1px solid var(--danger); color: #e08579;
+      border-radius: 999px; padding: 0.28rem 0.8rem; cursor: pointer; font-size: 0.75rem;
+    }
+    .cell-cancel:hover { background: var(--danger); color: #fff; }
+    .empty-row { text-align: center; color: #8a9099; padding: 2rem !important; white-space: normal; }
+    .selling { color: var(--gold); font-weight: 700; }
+    .admin-note { font-size: 0.76rem; color: #8a9099; margin-top: 1rem; }
+    @media (max-width: 560px) { .stat b { font-size: 1.3rem; } .admin-top h1 { font-size: 1.15rem; } }
+  </style>
+</head>
+<body>
+
+  <!-- PIN gate -->
+  <div class="pin-gate" id="pinGate">
+    <img src="assets/logo.svg" alt="" class="brand-logo" />
+    <h2>Owner Admin</h2>
+    <p id="modeBadge2">Bookings dashboard</p>
+    <input type="password" id="pinInput" inputmode="numeric" maxlength="8" placeholder="• • • •" aria-label="Admin PIN" />
+    <div class="pin-error" id="pinError"></div>
+    <button class="btn btn-gold btn-wide" id="pinBtn">Unlock Dashboard</button>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="admin-wrap" id="adminPanel" hidden>
+    <div class="admin-top">
+      <h1>📋 Bookings · <span id="shopName">SharpEdge</span></h1>
+      <div class="toolbar" style="margin:0">
+        <span class="mode-badge" id="modeBadge"></span>
+        <button class="cell-cancel" id="logoutBtn" style="border:0" title="Lock dashboard">🔒</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b id="statToday">–</b><span>Bookings today</span></div>
+      <div class="stat"><b id="statUpcoming">–</b><span>Upcoming (booked in)</span></div>
+      <div class="stat"><b id="statRevenue">–</b><span>Expected at shop (upcoming)</span></div>
+      <div class="stat"><b id="statTotal">–</b><span>Confirmations all-time</span></div>
+    </div>
+
+    <div class="toolbar">
+      <button class="chip active" data-range="upcoming">Upcoming</button>
+      <button class="chip" data-range="today">Today</button>
+      <button class="chip" data-range="all">All time</button>
+      <input type="date" id="dateFilter" title="Filter exact day" />
+      <button class="chip" id="clearDate" style="display:none">✕ clear</button>
+      <button class="chip" id="refreshBtn">↻ Refresh</button>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Time</th><th>Service</th><th>Customer</th><th>Phone</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <p class="admin-note" id="adminNote"></p>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

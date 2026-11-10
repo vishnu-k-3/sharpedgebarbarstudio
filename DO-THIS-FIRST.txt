@@ -1,0 +1,77 @@
+==============================================================
+  ✂️ SHARPEDGE BARBER STUDIO — DO THIS FIRST (when you're back)
+==============================================================
+
+Everything is BUILT and TESTED. This is your short checklist.
+
+──────────────────────────────────────────────────────────────
+ 1. TRY THE APP NOW (5 min, no setup)
+──────────────────────────────────────────────────────────────
+• Open  index.html   → book a test slot (it works offline too)
+• Open  admin.html   → enter PIN  2468  → you see the booking
+• Delete the test booking from My Bookings / admin panel
+
+Demo mode note: bookings live in the browser (device). For the
+REAL shared calendar, do step 2 below.
+
+──────────────────────────────────────────────────────────────
+ 2. GO LIVE FREE = Vercel + Supabase (~20 min needs YOU)
+    (cost ₹0; needs internet accounts only)
+──────────────────────────────────────────────────────────────
+a) supabase.com → sign up free → New project (free)
+   → SQL Editor → paste ALL of schema.sql → Run  ✅ table ready
+b) Put this folder on a free GitHub account (create repo, upload files)
+c) vercel.com → sign up free → Add New Project → import from GitHub
+   → BEFORE clicking Deploy, add 3 Environment Variables:
+      SUPABASE_URL         = (Supabase → Project Settings → API → Project URL)
+      SUPABASE_SERVICE_KEY = (same page → service_role key — KEEP SECRET)
+      ADMIN_PIN            = (choose your own strong 4-8 digit PIN)
+   → Deploy ✅ you get a free https link like sharpedge.vercel.app
+d) Edit js/config.js → set these two lines, then push/upload again:
+      useRemoteApi: true,
+      apiBase: "/api",
+      adminPin: "YOUR-PIN"   (same as ADMIN_PIN above)
+✅ DONE — one shared live booking calendar + admin sees ALL bookings.
+
+──────────────────────────────────────────────────────────────
+ 3. BEFORE GIVING THE SHOP OWNER (handover)
+──────────────────────────────────────────────────────────────
+• js/config.js → real shop name, address, phone, prices, hours, PIN
+• Replace portfolio placeholders (js/app.js → WORK_ITEMS) + review
+  photos/videos with real files (put them in assets/, see README)
+• Replace the map iframe in index.html with the shop's real
+  Google Maps embed (Maps → Share → Embed a map)
+• Optional: buy domain ~₹500–1,200/yr → add in Vercel → Domains
+
+──────────────────────────────────────────────────────────────
+ 4. PLAY STORE / APP STORE (later, optional)
+──────────────────────────────────────────────────────────────
+• Play Store: site is already a PWA. Use PWABuilder.com → download
+  Android AAB → Google Play dev account $25 ONE-TIME → upload.
+  (Customers can already use "Add to Home screen" today — free.)
+• App Store: Apple dev account $99/year + a Mac needed.
+  Wrap the site with Capacitor (npx cap init) → Xcode → submit.
+
+──────────────────────────────────────────────────────────────
+ COST SUMMARY
+──────────────────────────────────────────────────────────────
+• Hosting + backend + storage + SSL on Vercel/Supabase: ₹0
+• Domain (optional): ₹500–1,200 per year
+• Handover to barber owner: ≈ ₹100–200 (pen drive/ZIP) max
+• Play Store: $25 one-time  ·  App Store: $99/year (iOS only)
+
+──────────────────────────────────────────────────────────────
+ WHAT A HUMAN MUST DO (I can't do these for you)
+──────────────────────────────────────────────────────────────
+1. Create accounts: Supabase, GitHub, Vercel (all free, need email)
+2. Sign-up pages sometimes ask phone/email OTP — only you can verify
+3. Paste schema.sql inside Supabase (one click Run)
+4. Add the 3 environment variables in Vercel settings
+5. Take real photos/videos of the shop work to replace placeholders
+6. Decide a strong ADMIN_PIN (and change it in config.js + Vercel)
+7. Optionally buy your domain (payment needed) and connect to Vercel
+8. Real Google Maps embed of the actual shop address
+9. Later: store app signing accounts (Play console fees)
+
+See README.md for the full detailed guide for every step.
+==============================================================
