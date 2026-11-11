@@ -265,24 +265,39 @@ $("#modalClose").addEventListener("click", () => {
 });
 
 /* ---------- My bookings (this device) ---------- */
+
+/* Online cancellation closes 15 minutes before the slot start. */
+const CANCEL_CUTOFF_MINUTES = 15;
+function minutesToStart(b) {
+  const start = new Date(`${b.date}T${b.start}:00`);   // local time
+  return Math.round((start.getTime() - Date.now()) / 60000);
+}
+
+let lastMine = [];
+
 async function renderMyBookings() {
   let mine;
   try { mine = await Storage.getMine(); } catch { mine = []; }
-  const list = $("#myBookingsList");
-  mine = mine
+  lastMine = mine
     .filter((b) => b.status !== "cancelled")
     .sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start));
 
-  if (!mine.length) {
+  const list = $("#myBookingsList");
+  if (!lastMine.length) {
     list.innerHTML = `<p class="empty-note">No bookings yet — make one above and it appears here instantly.</p>`;
     return;
   }
-  list.innerHTML = mine.map((b) => {
+  list.innerHTML = lastMine.map((b) => {
     const [yy, mm, dd] = b.date.split("-").map(Number);
+    const mins = minutesToStart(b);
+    const cancellable = mins >= CANCEL_CUTOFF_MINUTES;
     return `<div class="booking-item">
       <div><b>${fmt12(b.start)}</b> · ${fmt12(b.end)}<br>${dd} ${monNames[mm - 1]} ${yy} · ${esc(b.serviceName)}</div>
       <div>${esc(b.name)} · ${esc(b.price)}<br>
-        <button class="booking-cancel" data-id="${b.id}">Cancel</button></div>
+        ${cancellable
+          ? `<button class="booking-cancel" data-id="${b.id}">Cancel</button>`
+          : `<span class="no-cancel">locked</span>`}
+      </div>
     </div>`;
   }).join("");
 }
@@ -290,6 +305,14 @@ async function renderMyBookings() {
 $("#myBookingsList").addEventListener("click", async (e) => {
   const btn = e.target.closest(".booking-cancel");
   if (!btn) return;
+  const b = lastMine.find((x) => x.id === btn.dataset.id);
+  if (!b) return;
+
+  const mins = minutesToStart(b);
+  if (mins < CANCEL_CUTOFF_MINUTES) {
+    alert(`Online cancellation closes 15 minutes before your slot. Please call the shop at ${CONFIG.phone}.`);
+    return;
+  }
   if (confirm("Cancel this booking? The slot becomes free for others.")) {
     try {
       await Storage.cancel(btn.dataset.id);
@@ -301,17 +324,8 @@ $("#myBookingsList").addEventListener("click", async (e) => {
 });
 $("#refreshBookings").addEventListener("click", renderMyBookings);
 
-/* ---------- Our work ---------- */
-const WORK_ITEMS = [
-  { title: "Classic Taper Fade", tag: "hair", fill: "fill-hair",    note: "Skin-tight to textured top" },
-  { title: "Full Beard Sculpt",  tag: "beard", fill: "fill-beard",  note: "Natural shape, line-up finish" },
-  { title: "Glow Facial Result", tag: "skin",  fill: "fill-skin",   note: "After 1 session · visible glow" },
-  { title: "Textured Crop",      tag: "hair", fill: "fill-hair",   note: "Low maintenance daily style" },
-  { title: "Long Hair Trim",     tag: "hair", fill: "fill-hair",   note: "Layers + split-end removal" },
-  { title: "De-Tan, Neck & Face",tag: "skin", fill: "fill-skin",   note: "2 sessions · even tone" },
-  { title: "Corporate Clean Cut",tag: "hair", fill: "fill-hair",   note: "Interview-ready look" },
-  { title: "Beard + Moustache Set", tag: "beard", fill: "fill-beard", note: "Wax & oil finish" },
-];
+/* ---------- Our work / reviews (shared data in js/content.js) ---------- */
+const { work: WORK_ITEMS, reviews: REVIEWS, videos: VIDEOS, rating } = CONTENT;
 
 function renderWork(filter = "all") {
   const items = WORK_ITEMS.filter((w) => filter === "all" || w.tag === filter);
@@ -333,17 +347,8 @@ $("#workFilter").addEventListener("click", (e) => {
 });
 
 /* ---------- Reviews ---------- */
-const REVIEWS = [
-  { name: "Rahul M.", date: "2 weeks ago", stars: 5, text: "Best haircut in the area. Booked the 45-min slot and literally walked in at my time — zero waiting. The barber understood exactly what I wanted.", photo: "fill-hair", photoLabel: "Fade result — replace with real photo" },
-  { name: "Aditya K.", date: "1 month ago", stars: 5, text: "Took the de-tan before my wedding. Results were visible the same day. Hygienic, professional, and the facial is very relaxing.", photo: "fill-skin", photoLabel: "De-tan result — replace with real photo" },
-  { name: "Suresh V.", date: "3 weeks ago", stars: 4, text: "Hair + beard combo is worth it. 75 minutes of full attention. Slightly crowded on Saturdays so book early.", photo: null },
-  { name: "Karthik P.", date: "5 days ago", stars: 5, text: "The glow facial is a must-try. My skin was glowing for days. Booking slots online is super easy and free.", photo: "fill-skin", photoLabel: "Facial result — replace with real photo" },
-  { name: "Vikram S.", date: "2 months ago", stars: 5, text: "Been coming here for 2 years. They remember my style every visit. The hot towel beard finish is elite.", photo: null },
-  { name: "Farhan A.", date: "1 week ago", stars: 5, text: "Clean tools, fresh towels every time. My son's first haircut was handled with so much patience. Highly recommend.", photo: "fill-hair", photoLabel: "First haircut — replace with real photo" },
-];
-
 function renderReviews() {
-  $("#ratingStars").innerHTML = starsHTML(4.8);
+  $("#ratingStars").innerHTML = starsHTML(rating.score);
   $("#writtenTitle").innerHTML = `${icon("quote")} Written Reviews`;
   $("#videoTitle").innerHTML = `${icon("video")} Video Reviews`;
 
@@ -365,11 +370,6 @@ function renderReviews() {
     </div>`).join("");
 }
 
-const VIDEOS = [
-  { label: "Customer video review — fade (replace: assets/videos/review1.mp4)", src: "https://www.w3schools.com/html/mov_bbb.mp4" },
-  { label: "Customer video review — facial (replace: assets/videos/review2.mp4)", src: "https://www.w3schools.com/html/mov_bbb.mp4" },
-];
-
 function renderVideos() {
   $("#videoGrid").innerHTML = VIDEOS.map((v) => `
     <div class="video-card">
@@ -387,6 +387,14 @@ function renderContact() {
   $("#contactPhone").innerHTML = `${icon("phone")} ${esc(CONFIG.phone)}`;
   const closed = CONFIG.closedDays.map((d) => dayNames[d]).join(" & ");
   $("#contactHours").innerHTML = `${icon("clock")} Mon–Sat · ${CONFIG.openHour % 12 === 0 ? 12 : CONFIG.openHour % 12} AM – ${CONFIG.closeHour % 12 || 12} PM · ${closed} closed`;
+
+  // map pin + directions (Cherupunkal, Pala, Kottayam — set in config.js)
+  const coords = CONFIG.coordinates || {};
+  if (coords.lat) {
+    const bbox = `${coords.lon - 0.02}%2C${coords.lat - 0.015}%2C${coords.lon + 0.02}%2C${coords.lat + 0.015}`;
+    $("#mapFrame").src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${coords.lat}%2C${coords.lon}`;
+  }
+  $("#mapDirections").href = CONFIG.mapsDirections || "#";
 }
 
 /* ---------- Init ---------- */

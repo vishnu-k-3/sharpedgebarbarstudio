@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css?v=6" />
 </head>
 <body>
 
@@ -26,6 +26,7 @@
         <a href="#services">Services</a>
         <a href="#work">Our Work</a>
         <a href="#reviews">Reviews</a>
+        <a href="about.html" class="mobile-only">Details</a>
         <a href="#booking" class="btn btn-sm btn-gold">Book Slot</a>
       </nav>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"></button>
@@ -111,6 +112,7 @@
             <button class="btn-link" id="refreshBookings">refresh</button>
           </div>
           <div id="myBookingsList" class="my-list"></div>
+          <p class="tiny-note">Free online cancellation until 15 minutes before your slot — after that, please call the shop.</p>
         </div>
       </div>
     </div>
@@ -166,10 +168,9 @@
         <a class="btn btn-gold" href="#booking">Book a Slot</a>
       </div>
       <div class="map-card">
-        <!-- replace this iframe src with the shop's real Google Maps embed -->
-        <iframe title="Shop location map" loading="lazy"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=77.55%2C12.90%2C77.65%2C12.98&amp;layer=mapnik"></iframe>
-        <span class="tiny-note">Placeholder map — replace with the shop's exact Google Maps embed before launch.</span>
+        <iframe id="mapFrame" title="Shop location map" loading="lazy" src=""></iframe>
+        <a id="mapDirections" class="btn btn-ghost" style="width:100%;text-align:center;margin-top:0.8rem" target="_blank" rel="noopener">Get Directions</a>
+        <span class="tiny-note">Pin set to Cherupunkal, Pala (686572) — if you prefer Google's own map, replace the iframe with your Google Maps "Embed a map" code.</span>
       </div>
     </div>
   </section>
@@ -192,9 +193,10 @@
     </div>
   </div>
 
-  <script src="js/config.js"></script>
-  <script src="js/icons.js"></script>
-  <script src="js/storage.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/config.js?v=6"></script>
+  <script src="js/icons.js?v=6"></script>
+  <script src="js/content.js?v=6"></script>
+  <script src="js/storage.js?v=6"></script>
+  <script src="js/app.js?v=6"></script>
 </body>
 </html>

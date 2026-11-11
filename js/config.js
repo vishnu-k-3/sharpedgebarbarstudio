@@ -25,7 +25,12 @@ const CONFIG = {
   ],
 
   phone: "+91 98765 43210",        // << replace with real number
-  address: "12, Main Street, MG Road", // << replace with real address
+  address: "Cherupunkal, Pala, Kottayam, Kerala – 686572",
+
+  // exact pin on the map (approx. Cherpunkal town — verify & fine-tune)
+  coordinates: { lat: 9.67011, lon: 76.70425 },
+  // one-tap directions link (opens Google Maps)
+  mapsDirections: "https://www.google.com/maps/search/?api=1&query=Cherupunkal%2C%20Pala%2C%20Kottayam%2C%20Kerala%20686572",
 
   // ---- STORAGE MODE ----
   // false = demo mode, bookings stay in this browser only.

@@ -399,6 +399,27 @@ a { color: inherit; text-decoration: none; }
   .nav > a:not(.btn) { font-size: 1rem; }
 }
 
+/* ============================================================
+   MOBILE-SIMPLE MODE — on small screens the page becomes just:
+   booking + map/contact. Services, work & reviews live on
+   about.html (linked as "Details" in the nav).
+   ============================================================ */
+.mobile-only { display: none !important; }
+
+@media (max-width: 760px) {
+  .mobile-only { display: inline-flex !important; }
+  #services, #work, #reviews { display: none; }
+  .hero { padding: 3.4rem 0 2.8rem; }
+  .hero h1 { font-size: clamp(2.1rem, 8vw, 2.8rem); }
+}
+
+/* locked (past cancellation window) badge */
+.no-cancel {
+  font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); border: 1px dashed var(--line-dark);
+  border-radius: 2px; padding: 0.28rem 0.7rem; white-space: nowrap;
+}
+
 /* touch-friendly tap targets */
 @media (hover: none) and (pointer: coarse) {
   .btn, .chip, .booking-cancel { min-height: 44px; }
